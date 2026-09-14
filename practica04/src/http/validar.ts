@@ -1,6 +1,7 @@
 import type { CrearPrestamoRequestDto } from '../contratos/prestamo.dto.js';
 import { ValidacionError } from './errores-http.js';
 
+//validacion en tiempo real
 export function validarCrearPrestamo(cuerpo: unknown): CrearPrestamoRequestDto {
     const errores: string[] = [];
 

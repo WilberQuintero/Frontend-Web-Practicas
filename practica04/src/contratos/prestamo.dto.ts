@@ -34,6 +34,7 @@ export function aResponseDto(p: Prestamo): PrestamoResponseDto {
     ejemplares: p.ejemplares,
     socioId: p.socioId,
     estado: p.estado,
+    //la fecha viaja como texto
     creadoEn: p.creadoEn.toISOString(),
   }
 }

@@ -13,6 +13,7 @@ const PUERTO = 3000;
 const repositorio = new InMemoryPrestamoRepository();
 const servicio = new PrestamoService(repositorio);
 
+//creamos la app de express
 const app = express();
 
 app.use(express.json());
