@@ -1,8 +1,8 @@
-## Practica 6 - Inscripciones al gimnasio (SOLUCION)
+### Practica 6 - Inscripciones al gimnasio (SOLUCION)
 ###
 ### COMO SE USA:
 ###   1. Extension "REST Client" (humao.rest-client) en VS Code.
-###   2. #npm run start:dev
+###   2. npm run start:dev
 ###   3. Clic en "Send Request" arriba de cada peticion.
 ###
 ### OJO: el orden importa. El horario 1 tiene cupoMaximo = 2, asi que las
