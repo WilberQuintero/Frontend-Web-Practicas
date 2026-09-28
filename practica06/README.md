@@ -1,18 +1,21 @@
-## 1.- ¿Por qué la interfaz MiembroRepository no menciona Express, NestJS ni memoria?
-- Porque pertenece a la capa de dominio y el dominio debe mantenerse listo para recibir cualquier framework.
+## .-1 ¿Qué pasaría si el módulo no quedara registrado en la raíz (AppModule)?
+- NestJS no reconocería sus controladores ni sus servicios. Y las rutas expuestas por ese módulo no estarían disponibles (devolverían 404) y sus dependencias no podrían ser inyectadas en otras partes.
 
-## 2.- ¿Qué palabra de la clase MiembroMemoriaRepository es la que promete cumplir la interfaz del paso anterior?
-- implements (implements MiembroRepository).
+## .-2 ¿Por qué los métodos del repositorio devuelven promesas si los datos van a estar en memoria?
+- Porque la interfaz del repositorio está diseñada con abstracción de asincronía y eso permite que pueda acoplarse al principo de dependencias, si en el futuro se cambia la implementación en memoria por una base de datos real, la firma de los métodos ya será asíncrona osea que no habra que modificar nada.
 
+## .-3 ¿Qué error apareció al cambiar a la interfaz, y por qué la clase sí se había resuelto sola?
+- Aparece un error de inyección de dependencias en tiempo de ejecución "Nest can't resolve dependencies of the InscripcionesService...". Las clases en TypeScript existen tanto en tiempo de compilación como de ejecución, por lo que NestJS puede usarlas directamente como token en su contenedor. Y las interfaces son eliminadas en la transpilación a Javascript, por lo que NestJS no tiene ninguna referencia en runtime para saber qué instanciar.
 
-## 3.- ¿Por qué el archivo miembros.service.ts no sabe qué es una petición HTTP?
-- Porque el Servicio se encarga de la lógica de negocio no de la capa de envios. No maneja objetos req, res, cabeceras HTTP ni códigos de estado.
+## .-4 ¿Por qué el servicio necesita un token para el repositorio, pero el controlador no lo necesita para el servicio?
+- El servicio depende de una interfaz "InscripcionRepository", la cual no existe en el runtime de JavaScript, obligando a NestJS a usar un token explícito "@Inject(INSCRIPCION_REPOSITORY)". Y el controlador depende directamente de una clase concreta "InscripcionesService", la cual si existe en JavaScript como función constructora en runtime, permitiendo que NestJS la resuelva automáticamente por su tipo.
 
-## 4.- ¿Por qué el Service se inyecta sin token en el Controller, y el repositorio sí necesita uno?
-- El controlador depende de una clase especifica, la cual existe en tiempo de ejecución. El repositorio en el servicio se inyecta usando una interfaz, la cual es borrada por TypeScript al transpilar a JavaScript, haciendo indispensable el uso de un token oara que NestJS sepa que entregar.
+## .-5 ¿Cuál es la diferencia entre un 400 y un 409?
+- 400 Bad Request: Indica que la sintaxis o estructura de la petición es incorrecta o le faltan campos obligatorios.
 
-## 5.- ¿Qué prueba, en los hechos, que agregar Miembros no rompió nada de Inscripciones?
-- Que es un sistema que permite la incorporacion de diferentes modulos sin tener que hacer cambios en la arquitectura, y tambien que al ejecutar las peticiones HTTP de Inscripciones todas siguen respondiendo con los mismos codigos de estado sin alterar el funcionamiento.
+409 Conflict: Indica que la petición está bien estructurada y entendible, pero no se puede procesar porque viola el estado o las reglas de negocio del sistema, por ejemplo, cupo lleno o intento de inscripción duplicada.
 
+## .-6 ¿Por qué cambió el código de estado de esa última petición?
+- Porque al cancelar la inscripción, el cupo disponible o el estado del miembro volvió a cumplir las condiciones de negocio. Por lo tanto, la petición que antes chocaba con el estado del sistema "09 Conflict" pasa a ser válida y crea la inscripción exitosamente "201 Created".
 
 Wilber Valdez Quintero
