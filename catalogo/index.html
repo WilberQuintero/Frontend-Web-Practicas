@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catálogo de Productos</title>
+    <link rel="stylesheet" href="./src/estilos.css">
+  </head>
+  <body>
+    <header class="encabezado">
+      <div class="encabezado_contenido">
+        <h1>Catálogo</h1>
+        <div class="encabezado_carrito">
+          <span class="contador" id="cuenta">0</span>
+          <!-- Aquí irá tu componente de botón -->
+          <boton-app variante="secundario" id="vaciar">Vaciar</boton-app>
+        </div>
+      </div>
+    </header>
+
+    <main class="principal">
+      <section class="portada">
+        <h2>Equipamiento y Ropa Deportiva</h2>
+        <p>Selección de artículos para entrenamiento funcional y running.</p>
+      </section>
+
+      <!-- Contenedor donde se inyectarán las tarjetas de productos -->
+      <section class="rejilla" id="rejilla" aria-label="Productos"></section>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

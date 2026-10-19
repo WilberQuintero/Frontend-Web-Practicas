@@ -8,6 +8,7 @@ import { DominioExceptionFilter } from './comun/filtros/dominio.filter';
 import { LoggingInterceptor } from './comun/interceptores/logging.interceptor';
 import { SobreInterceptor } from './comun/interceptores/sobre.interceptor';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard'; // NUEVO (Paso 4)
+import './boton-app'; // NUEVO (Paso 1): importa el componente <boton-app> para que el navegador lo conozca.
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
