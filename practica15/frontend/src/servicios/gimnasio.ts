@@ -14,3 +14,12 @@ export async function traerClase(id: number): Promise<ClaseConHorarios> {
   const respuesta = await api.get<Sobre<ClaseConHorarios>>(`/clases/${id}`);
   return respuesta.data.data;
 }
+
+export async function inscribirse(id: number): Promise<void> {
+  await api.post('inscripciones', { id });
+}
+
+export async function traerMisInscripciones(): Promise<ClaseConHorarios[]> {
+  const respuesta = await api.get<Sobre<ClaseConHorarios[]>>('/inscripciones/mias');
+  return respuesta.data.data;
+}
